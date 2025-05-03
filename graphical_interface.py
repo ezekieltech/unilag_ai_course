@@ -5,6 +5,8 @@ import random
 
 # --- GUI Class --- #
 class SearchVisualizer:
+    
+    # setting up the vizualization
     def __init__(self, root):
         self.root = root
         self.root.title("Uninformed Search Visualization (DFS & BFS)")
@@ -61,7 +63,7 @@ class SearchVisualizer:
         level = 0
         count = 0
         while count < N:
-            nodes_in_level = min(2 ** level, N - count)
+            nodes_in_level = min(2 ** level, N - count) # each level has 2 ** n nodes
             levels.append(nodes_in_level)
             count += nodes_in_level
             level += 1
@@ -73,7 +75,7 @@ class SearchVisualizer:
             for i in range(num_nodes):
                 x = (i + 1) * x_gap
                 y = (lvl + 1) * y_gap
-                node_name = chr(65 + node_index)  # A, B, C, ...
+                node_name = chr(65 + node_index)  # A, B, C, ... above 26 letters, you get non letters
                 self.nodes[node_name] = (x, y)
                 node_index += 1
 
@@ -92,11 +94,13 @@ class SearchVisualizer:
             text = self.canvas.create_text(x, y, text=node, font=("Arial", 12, "bold"))
             self.node_widgets[node] = oval
 
+    # helper code for resetting node colors after calling dfs and bfs respectively
     def reset_node_colors(self):
         for node in self.node_widgets:
             self.canvas.itemconfig(self.node_widgets[node], fill="lightblue")
         self.root.update()
 
+    # helper code for highlighting node colors after calling dfs and bfs respectively
     def highlight_node(self, node):
         self.canvas.itemconfig(self.node_widgets[node], fill="yellow")
         self.root.update()
@@ -132,6 +136,7 @@ class SearchVisualizer:
                 self.highlight_node(current)
                 queue.extend([n for n in self.get_neighbors(current) if n not in visited])
 
+    # helper nodes for getting neighbors
     def get_neighbors(self, node):
         neighbors = []
         for edge in self.edges:
