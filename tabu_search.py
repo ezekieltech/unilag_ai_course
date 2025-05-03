@@ -4,6 +4,8 @@ import time
 from copy import deepcopy
 
 class TabuSearch8Puzzle:
+
+    # GUI design. Initializing the GUI
     def __init__(self, root):
         self.root = root
         self.root.title("8-Puzzle Solver with Tabu Search")
@@ -44,6 +46,7 @@ class TabuSearch8Puzzle:
 
         self.scramble_board()
 
+    # function that scrambles the board
     def scramble_board(self):
         nums = list(range(9))
         random.shuffle(nums)
@@ -51,6 +54,7 @@ class TabuSearch8Puzzle:
         self.update_board(self.state)
         self.status_label.config(text="")
 
+    # # function that updates the board the board
     def update_board(self, state):
         for i in range(3):
             for j in range(3):
@@ -58,6 +62,7 @@ class TabuSearch8Puzzle:
                 self.tiles[i][j].config(text="" if val == 0 else str(val), bg="lightblue")
         self.root.update()
 
+    # helper function
     def find_zero(self, state):
         for i in range(3):
             for j in range(3):
@@ -76,6 +81,7 @@ class TabuSearch8Puzzle:
                 neighbors.append(new_state)
         return neighbors
 
+    #  calculating the distance
     def heuristic(self, state):
         distance = 0
         for i in range(3):
